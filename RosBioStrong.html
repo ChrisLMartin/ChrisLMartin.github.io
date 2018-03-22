@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8" />
-<title>Rosalind Bioinformatics Stronghold</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>RosBioStrong</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 <style type="text/css">
@@ -11783,7 +11783,23 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Computing-GC-Content"><a href="http://rosalind.info/problems/gc/">Computing GC Content</a><a class="anchor-link" href="#Computing-GC-Content">&#182;</a></h3>
+<h3 id="Computing-GC-Content">Computing GC Content<a class="anchor-link" href="#Computing-GC-Content">&#182;</a></h3><p>The original problem, and background on its importance to bioinformatics can be found <a href="http://rosalind.info/problems/gc/">here</a>.</p>
+<h4 id="Problem-summary">Problem summary<a class="anchor-link" href="#Problem-summary">&#182;</a></h4><p><strong>Given</strong>: At most 10 DNA strings in FASTA format (of length at most 1 kbp each).</p>
+<blockquote><p>&gt;Rosalind_6404<br>
+CCTGCGGAAGATCGGCACTAGAATAGCCAGAACCGTTTCTCTGAGGCTTCCGGCCTTCCC<br>
+TCCCACTAATAATTCTGAGG<br>
+&gt;Rosalind_5959<br>
+CCATCGGTAGCGCATCCTTAGTCCAATTAAGTCCCTATCCAGGCGCTCCGCCGAAGGTCT<br>
+ATATCCATTTGTCAGCAGACACGC<br>
+&gt;Rosalind_0808<br>
+CCACCCTCGTGGTATGGCTAGGCATTCAGGAACCGGAGAACGCTTCAGACCAGCCCGGAC<br>
+TGGGAACCTGCGGGCAGTAGGTGGAAT</p>
+</blockquote>
+<p><strong>Return</strong>: The ID of the string having the highest GC-content, followed by the GC-content of that string.</p>
+<blockquote><p>Rosalind_0808<br>
+60.919540</p>
+</blockquote>
+
 </div>
 </div>
 </div>
