@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Chris Martin - Dev</title>
+
+    <link rel="stylesheet" href="https://fonts.xz.style/serve/inter.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@1.1.2/new.min.css"
+    />
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
+    <meta name="msapplication-TileColor" content="#da532c" />
+    <meta name="theme-color" content="#ffffff" />
+  </head>
+  <body>
+    <header>
+      <h1>Chris Martin</h1>
+      <nav>
+        <a href="https://christophermartin.dev">Home</a> /
+        <a href="https://twitter.com/martinchrisl">Twitter</a> /
+        <a href="https://github.com/ChrisLMartin">GitHub</a> /
+        <a href="https://www.linkedin.com/in/christopherlancemartin/"
+          >LinkedIn</a
+        >
+      </nav>
+    </header>
+    <main>
+      <h2>Computing GC Content</h2>
+      <p>A Rosalind Bioinformatics Stronghold Problem</p>
+      <p>
+        Background on the problem and its importance to bioinformatics can be
+        found on the
+        <a href="http://rosalind.info/problems/gc/">Rosalind problem page</a>.
+      </p>
+      <h4>Summary</h4>
+      <p>
+        <b>Given:</b> At most 10 DNA strings in FASTA format (of length at most
+        1 kbp each).
+      </p>
+      <blockquote>
+        <p>
+          >Rosalind_6404<br />
+          CCTGCGGAAGATCGGCACTAGAATAGCCAGAACCGTTTCTCTGAGGCTTCCGGCCTTCCCTCCCACTAATAATTCTGAGG
+        </p>
+        <p>
+          >Rosalind_5959<br />
+          CCATCGGTAGCGCATCCTTAGTCCAATTAAGTCCCTATCCAGGCGCTCCGCCGAAGGTCTATATCCATTTGTCAGCAGACACGC
+        </p>
+        <p>
+          >Rosalind_0808<br />
+          CCACCCTCGTGGTATGGCTAGGCATTCAGGAACCGGAGAACGCTTCAGACCAGCCCGGACTGGGAACCTGCGGGCAGTAGGTGGAAT
+        </p>
+      </blockquote>
+      <p>
+        <b>Return:</b> The ID of the string having the highest GC-content,
+        followed by the GC-content of that string.
+      </p>
+      <blockquote>
+        <p>
+          Rosalind_0808<br />
+          60.919540
+        </p>
+      </blockquote>
+      <h4>Solution</h4>
+      <pre>
+    from collections import defaultdict
+
+    with open("./rosalind_gc.txt", 
+            "r") as in_file, open("./out_gc.txt", "w") as out_file:
+        
+        lines = [x for x in in_file.readlines()]
+        
+        keys = []
+        values = []
+        
+        for line in lines:
+            if line.startswith(">"):
+                values.append("")
+                keys.append(line.lstrip('>').rstrip('\n'))
+            else:
+                values[len(keys)-1] += line.rstrip('\n')
+                
+        d = dict(zip(keys, values))
+        
+        for k, dna in d.items():
+            base_counts = defaultdict(int)
+            base_pct = defaultdict(int)
+            for base in dna:
+                base_counts[base] += 1
+            for base in base_counts.keys():
+                base_pct[base] = base_counts[base] / sum(base_counts.values()) * 100
+            d[k] = base_pct['G'] + base_pct['C']     
+        
+        max_key = max(d.keys(), key=(lambda key: d[key]))    
+        
+    #     Will just print instead of write file
+    #     out_file.write("{}\n{}".format(max_key, d[max_key]))
+        
+        print("Input file (ellipsis indicates continued DNA string):")
+        for line in lines[:3]:
+            print(line, end='')
+        print("...")
+        for line in lines[18:21]:
+            print(line, end='')
+        print("...")
+        print("etc.\n")
+        
+        print("Output file:")
+        print("{}\n{}".format(max_key, d[max_key]))
+    </pre
+      >
+      <h4>Output</h4>
+      <pre>
+    Input file (ellipsis indicates continued DNA string):
+    >Rosalind_3714
+    AATCCGTATCACGCCGTGATCTACAGTTGAAAAGAGTTATTGGGCACCCTTCCTAGCCAC
+    TGATGAGAGCGCGTGGGCTGGTTGTCCCTTTTCCTCAGAAGTGCTTAGGCCATACGGCCT
+    ...
+    >Rosalind_3190
+    TCTTTGTCAAATGTAGCTATCGACGGGCCGAGTCGTACTAGCATTCAGTCCGTGGGCCTA
+    CACGTATAGCTAAGTAGTAAGTGCGAATGCCGAGTTGGCTGTAGCCGTAAGCATTATCTT
+    ...
+    etc.
+    
+    Output file:
+    Rosalind_3055
+    51.31004366812227
+        </pre
+      >
+    </main>
+  </body>
+</html>
