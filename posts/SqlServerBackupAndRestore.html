@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Chris Martin - Dev</title>
+
+    <link rel="stylesheet" href="https://fonts.xz.style/serve/inter.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@1.1.2/new.min.css"
+    />
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
+    <meta name="msapplication-TileColor" content="#da532c" />
+    <meta name="theme-color" content="#ffffff" />
+  </head>
+  <body>
+    <header>
+      <h1>Chris Martin</h1>
+      <nav>
+        <a href="https://christophermartin.dev">Home</a> /
+        <a href="https://twitter.com/martinchrisl">Twitter</a> /
+        <a href="https://github.com/ChrisLMartin">GitHub</a> /
+        <a href="https://www.linkedin.com/in/christopherlancemartin/"
+          >LinkedIn</a
+        >
+      </nav>
+    </header>
+    <main>
+      <h2>SQL Server Backup and Restore</h2>
+      <p>Backup sets tripped me up.</p>
+      <p>
+        I needed to create a new backup with some additional data to test the patch I was working on. I was using a script from out CI pipeline to replicate that process as closely as possible when restoring databases locally. Being unfamiliar with backup sets, when creating my backup with the new data, I hadn't included <code>INIT</code> in the T-SQL command. As the <code>RESTORE</code> command included <code>WITH FILE = 1</code> I kept restoring the old version of the database. <code>RESTORE HEADERONLY</code> was what I needed to identify the multiple backups in the set. 
+      </p>
+    </main>
+  </body>
+</html>
