@@ -1,0 +1,56 @@
+---
+layout: null
+title: Recovering a Key Vault and restoring service
+summary: What to verify after soft-delete recovery, from restoring permissions to
+  testing a workload read.
+topic: Azure Key Vault
+section: writing
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="What to verify after soft-delete recovery, from restoring permissions to testing a workload read.">
+  <title>Recovering a Key Vault and restoring service</title>
+  <style>
+    :root { color-scheme: light dark; font-family: system-ui, sans-serif; }
+    * { box-sizing: border-box; }
+    body { margin: 0; line-height: 1.65; }
+    main { max-width: 46rem; margin: 0 auto; padding: clamp(1rem, 5vw, 3rem) 1rem 3rem; }
+    header { margin-block: 2rem; }
+    h1 { font-size: clamp(2rem, 6vw, 3.3rem); letter-spacing: -.04em; line-height: 1.1; }
+    h2 { font-size: clamp(1.25rem, 4vw, 1.65rem); margin-block: 2rem .6rem; line-height: 1.2; }
+    p, h1 { margin-block: .5rem 1rem; }
+    .topic { font-size: .88rem; font-weight: 650; }
+    .lede { font-size: 1.12rem; }
+    li + li { margin-block-start: .55rem; }
+    a { text-underline-offset: .18em; }
+    :focus-visible { outline: .15rem solid currentColor; outline-offset: .2rem; }
+  </style>
+</head>
+<body>
+  <main>
+    <nav aria-label="Main"><a href="../">Home</a></nav>
+    <article>
+      <header>
+        <p class="topic">Azure Key Vault</p>
+        <h1>Recovering a Key Vault and restoring service</h1>
+        <p class="lede">What to verify after soft-delete recovery, from restoring permissions to testing a workload read.</p>
+      </header>
+
+      <p>During a Key Vault recovery I helped with, the vault and its contents came back before the applications could use them. The recovery had two milestones. First we recovered the resource. Then we restored and verified the service that depended on it.</p>
+
+      <h2>Rebuild the access the workload needs</h2>
+      <p>Recovering a soft-deleted vault can bring back its keys, secrets and certificates within the retention window. Integrations such as vault-scoped Azure RBAC assignments and Event Grid subscriptions need to be recreated separately.</p>
+      <p>Use the desired configuration as your starting point. If it’s incomplete, Activity Log history can help establish which role assignments existed before deletion. Compare the expected principals, roles and scopes with what is live now. Avoid using a broad grant as a shortcut when the previous access can be recovered precisely.</p>
+      <p>I prepared a script that previewed the proposed changes, applied only the agreed assignments and skipped any that already existed. Previewing the diff gave someone else a chance to check it. Skipping existing assignments meant we could rerun after a partial failure.</p>
+
+      <h2>Verify access from the application’s side</h2>
+      <p>Exercise a representative operation using the workload’s identity and usual network path. An administrator reading the same secret from a different network tests a different access path. Use diagnostic logs to confirm that the workload identity made a successful call, and verify other integrations separately if the service depends on them.</p>
+      <p>If a network dependency appears to be missing, compare with a known-good configuration or earlier telemetry before rebuilding it. Record what was restored, how the application was checked and anything that remains unresolved. That gives the next responder a usable recovery procedure.</p>
+      <p><a href="https://learn.microsoft.com/en-us/azure/key-vault/general/soft-delete-overview">Azure Key Vault soft-delete documentation</a></p>
+    </article>
+  </main>
+</body>
+</html>
