@@ -1,0 +1,56 @@
+---
+layout: null
+title: Keeping human approval in AI-assisted PR review
+summary: How to make automated review output useful while keeping the approval attached
+  to a person and a revision.
+topic: Developer tooling
+section: writing
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="How to make automated review output useful while keeping the approval attached to a person and a revision.">
+  <title>Keeping human approval in AI-assisted PR review</title>
+  <style>
+    :root { color-scheme: light dark; font-family: system-ui, sans-serif; }
+    * { box-sizing: border-box; }
+    body { margin: 0; line-height: 1.65; }
+    main { max-width: 46rem; margin: 0 auto; padding: clamp(1rem, 5vw, 3rem) 1rem 3rem; }
+    header { margin-block: 2rem; }
+    h1 { font-size: clamp(2rem, 6vw, 3.3rem); letter-spacing: -.04em; line-height: 1.1; }
+    h2 { font-size: clamp(1.25rem, 4vw, 1.65rem); margin-block: 2rem .6rem; line-height: 1.2; }
+    p, h1 { margin-block: .5rem 1rem; }
+    .topic { font-size: .88rem; font-weight: 650; }
+    .lede { font-size: 1.12rem; }
+    li + li { margin-block-start: .55rem; }
+    a { text-underline-offset: .18em; }
+    :focus-visible { outline: .15rem solid currentColor; outline-offset: .2rem; }
+  </style>
+</head>
+<body>
+  <main>
+    <nav aria-label="Main"><a href="../">Home</a></nav>
+    <article>
+      <header>
+        <p class="topic">Developer tooling</p>
+        <h1>Keeping human approval in AI-assisted PR review</h1>
+        <p class="lede">How to make automated review output useful while keeping the approval attached to a person and a revision.</p>
+      </header>
+
+      <p>When I looked through repeated DevOps tasks, pull request review and build triage were natural candidates for reusable workflows. The useful automation prepared evidence and surfaced issues. A person still made the approval decision.</p>
+
+      <h2>Tie a review to a revision</h2>
+      <p>Start from the current diff and PR context, then record the exact revision reviewed. A clean review can queue the PR for a person. A new revision removes the queued result and requires a fresh review before it is eligible again. Otherwise an approval decision can accidentally rely on an older diff.</p>
+
+      <h2>Make the queue easy to act on</h2>
+      <p>The queue includes a short summary and points to unresolved threads so the reviewer knows where to start. If the author pushes another revision, a human votes or the PR stops being active, it drops out of the queue. The developer still has the normal review controls and can inspect every finding.</p>
+      <p>The automated reviewer also treats threads as belonging to their authors. It can suggest that a thread is resolved, while leaving someone else’s decision to close their discussion with them.</p>
+
+      <h2>Exercise the state transitions before enabling writes</h2>
+      <p>Use dry runs and intercepted writes to test a clean review, a new revision after review, existing human feedback and a PR that returns to draft. I found this more useful than tuning the reviewer on one happy-path diff. The state transitions determine whether the workflow stays trustworthy once people start using it.</p>
+    </article>
+  </main>
+</body>
+</html>
