@@ -1,0 +1,57 @@
+---
+layout: null
+title: Verifying recovery after a partial Azure Policy deployment
+summary: How to compare expected policy coverage with live Azure state after a deployment
+  stops partway through.
+topic: Incident lessons
+section: writing
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="How to compare expected policy coverage with live Azure state after a deployment stops partway through.">
+  <title>Verifying recovery after a partial Azure Policy deployment</title>
+  <style>
+    :root { color-scheme: light dark; font-family: system-ui, sans-serif; }
+    * { box-sizing: border-box; }
+    body { margin: 0; line-height: 1.65; }
+    main { max-width: 46rem; margin: 0 auto; padding: clamp(1rem, 5vw, 3rem) 1rem 3rem; }
+    header { margin-block: 2rem; }
+    h1 { font-size: clamp(2rem, 6vw, 3.3rem); letter-spacing: -.04em; line-height: 1.1; }
+    h2 { font-size: clamp(1.25rem, 4vw, 1.65rem); margin-block: 2rem .6rem; line-height: 1.2; }
+    p, h1 { margin-block: .5rem 1rem; }
+    .topic { font-size: .88rem; font-weight: 650; }
+    .lede { font-size: 1.12rem; }
+    li + li { margin-block-start: .55rem; }
+    a { text-underline-offset: .18em; }
+    :focus-visible { outline: .15rem solid currentColor; outline-offset: .2rem; }
+  </style>
+</head>
+<body>
+  <main>
+    <nav aria-label="Main"><a href="../">Home</a></nav>
+    <article>
+      <header>
+        <p class="topic">Incident lessons</p>
+        <h1>Verifying recovery after a partial Azure Policy deployment</h1>
+        <p class="lede">How to compare expected policy coverage with live Azure state after a deployment stops partway through.</p>
+      </header>
+
+      <p>After an Azure Policy deployment stopped partway through, a question remained even when retry runs began to complete. Which policy assignments and exemptions were actually back in place? I worked on read-only verification that compared the configuration in Git with what was live in Azure.</p>
+
+      <h2>Build the expected inventory</h2>
+      <p>Pick the reviewed configuration revision that represents the intended recovery state. Enumerate policy assignments and exemptions within the recovery scope. Include the scope as part of each record’s identity. The same assignment name at a different scope does not provide the same coverage.</p>
+      <p>For each assignment, keep enough information to check that it points at the intended definition or initiative and uses the identity the policy expects. For exemptions, track the assignment they apply to and the relevant scope. Compare ownership metadata where that helps distinguish managed resources from exceptions created elsewhere.</p>
+
+      <h2>Compare with live state</h2>
+      <p>I used Azure Resource Graph to collect a read-only live inventory. We grouped results into records that matched, were missing or differed in a way that required review. That let us cross-check known failed items from the deployment logs without relying on the logs alone to find every gap.</p>
+      <p>Confirm that your account can see every relevant scope and account for the time it takes for inventory data to catch up. Use a direct control-plane read for urgent or ambiguous results. Treat incomplete coverage as a gap in the evidence.</p>
+
+      <h2>Separate verification from repair</h2>
+      <p>Use the gap report to plan narrowly scoped fixes, then rerun the comparison. Check the dependent identities or remediation separately where they matter. Keeping the verification step read-only makes it usable while changes are still being reviewed and gives the team a repeatable way to show what service was restored.</p>
+    </article>
+  </main>
+</body>
+</html>
