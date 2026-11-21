@@ -1,0 +1,57 @@
+---
+layout: null
+title: Testing keyless host storage for Logic Apps Standard
+summary: What a sandbox test revealed about runtime identity, restart behaviour and
+  storage permissions.
+topic: Managed identity
+section: writing
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="What a sandbox test revealed about runtime identity, restart behaviour and storage permissions.">
+  <title>Testing keyless host storage for Logic Apps Standard</title>
+  <style>
+    :root { color-scheme: light dark; font-family: system-ui, sans-serif; }
+    * { box-sizing: border-box; }
+    body { margin: 0; line-height: 1.65; }
+    main { max-width: 46rem; margin: 0 auto; padding: clamp(1rem, 5vw, 3rem) 1rem 3rem; }
+    header { margin-block: 2rem; }
+    h1 { font-size: clamp(2rem, 6vw, 3.3rem); letter-spacing: -.04em; line-height: 1.1; }
+    h2 { font-size: clamp(1.25rem, 4vw, 1.65rem); margin-block: 2rem .6rem; line-height: 1.2; }
+    p, h1 { margin-block: .5rem 1rem; }
+    .topic { font-size: .88rem; font-weight: 650; }
+    .lede { font-size: 1.12rem; }
+    li + li { margin-block-start: .55rem; }
+    a { text-underline-offset: .18em; }
+    :focus-visible { outline: .15rem solid currentColor; outline-offset: .2rem; }
+  </style>
+</head>
+<body>
+  <main>
+    <nav aria-label="Main"><a href="../">Home</a></nav>
+    <article>
+      <header>
+        <p class="topic">Managed identity</p>
+        <h1>Testing keyless host storage for Logic Apps Standard</h1>
+        <p class="lede">What a sandbox test revealed about runtime identity, restart behaviour and storage permissions.</p>
+      </header>
+
+      <p>I wanted to know whether a Logic Apps Standard workflow could start and run with key authentication disabled on its host storage account. I built a small sandbox to separate identity selection, storage access and network configuration.</p>
+
+      <h2>Prove the runtime, not just the deployment</h2>
+      <p>A successful infrastructure deployment only tells you that Azure accepted the configuration. I used a stateful workflow to check whether the host actually started, ran the workflow and stayed healthy after a restart. I gave each identity variant time for its role assignments to take effect before treating a failed startup as evidence.</p>
+      <p>In this setup, the system-assigned identity variants failed to start the host. A user-assigned identity, explicitly selected for the host storage connection, started successfully and continued working after restart. The sandbox had network access to the required storage services. This result is specific to the hosting setup I tested.</p>
+
+      <h2>Reduce the grants and repeat the test</h2>
+      <p>After establishing a working configuration, I removed broader permissions and reran the workflow. The user-assigned identity needed the Blob, Queue and Table Data Contributor roles in that setup. The management-plane Storage Account Contributor role was unnecessary. Testing the smaller role set after restart gave me more confidence than checking a single successful run.</p>
+      <p>I also verified that a separate Key Vault reference continued to resolve through the app’s system-assigned identity. Host storage and Key Vault reference resolution are separate jobs, so test each through the identity it is supposed to use.</p>
+
+      <h2>Before adopting it</h2>
+      <p>Repeat the test in the hosting plan and networking model you intend to use. Include your deployment method, workflow execution and a restart. Review network reachability for each storage service and keep a recovery path until the new configuration has proved itself.</p>
+    </article>
+  </main>
+</body>
+</html>
