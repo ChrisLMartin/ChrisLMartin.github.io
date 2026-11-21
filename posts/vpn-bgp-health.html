@@ -1,0 +1,59 @@
+---
+layout: null
+title: Checking BGP when the VPN tunnel is up
+summary: How to distinguish healthy tunnels, missing routes and reduced redundancy
+  during a VPN incident.
+topic: Azure networking
+section: writing
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="How to distinguish healthy tunnels, missing routes and reduced redundancy during a VPN incident.">
+  <title>Checking BGP when the VPN tunnel is up</title>
+  <style>
+    :root { color-scheme: light dark; font-family: system-ui, sans-serif; }
+    * { box-sizing: border-box; }
+    body { margin: 0; line-height: 1.65; }
+    main { max-width: 46rem; margin: 0 auto; padding: clamp(1rem, 5vw, 3rem) 1rem 3rem; }
+    header { margin-block: 2rem; }
+    h1 { font-size: clamp(2rem, 6vw, 3.3rem); letter-spacing: -.04em; line-height: 1.1; }
+    h2 { font-size: clamp(1.25rem, 4vw, 1.65rem); margin-block: 2rem .6rem; line-height: 1.2; }
+    p, h1 { margin-block: .5rem 1rem; }
+    .topic { font-size: .88rem; font-weight: 650; }
+    .lede { font-size: 1.12rem; }
+    li + li { margin-block-start: .55rem; }
+    a { text-underline-offset: .18em; }
+    :focus-visible { outline: .15rem solid currentColor; outline-offset: .2rem; }
+  </style>
+</head>
+<body>
+  <main>
+    <nav aria-label="Main"><a href="../">Home</a></nav>
+    <article>
+      <header>
+        <p class="topic">Azure networking</p>
+        <h1>Checking BGP when the VPN tunnel is up</h1>
+        <p class="lede">How to distinguish healthy tunnels, missing routes and reduced redundancy during a VPN incident.</p>
+      </header>
+
+      <p>In a routing incident I helped investigate, IPsec tunnels stayed connected while some Border Gateway Protocol (BGP) sessions failed to re-establish. The tunnel status missed the routing problem. I now split the checks into tunnel state, peer state, route coverage and actual traffic.</p>
+
+      <h2>Check peers and prefixes</h2>
+      <p>Start with the state of each expected peer. Then compare what each side advertises with what the other side has learned. An established session can still be missing the prefix a workload needs.</p>
+      <p>Keep a known-good snapshot and make two comparisons:</p>
+      <ul>
+        <li><strong>Compare prefixes.</strong> If an expected prefix disappears, check the effective route to the destination. Another route may still cover it, or traffic may have lost its expected path.</li>
+        <li><strong>Compare prefixes and next hops together.</strong> If the prefix remains but a next hop disappears, traffic may still flow with less redundancy. That needs a different alert and response from a complete loss of the destination.</li>
+      </ul>
+
+      <h2>Check that traffic works again</h2>
+      <p>Once the expected peers and routes return, test an application-level connection from a representative source. Include the return path in the investigation because a route in one direction only tells half the story.</p>
+      <p>For monitoring, start with per-peer BGP state and add checks for the prefixes that matter to workloads. Keep a separate signal for reduced redundancy if failover matters. Those signals let an on-call engineer tell whether to restore service immediately or investigate a degraded backup path.</p>
+      <p><a href="https://learn.microsoft.com/en-us/azure/vpn-gateway/monitor-vpn-gateway">Azure VPN Gateway monitoring documentation</a></p>
+    </article>
+  </main>
+</body>
+</html>
