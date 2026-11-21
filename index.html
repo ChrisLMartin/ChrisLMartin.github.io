@@ -1,3 +1,5 @@
+---
+---
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -93,18 +95,18 @@
 
     <section id="writing" class="section" aria-labelledby="writing-heading">
       <h2 id="writing-heading">Writing</h2>
+      {% assign articles = site.pages | where: 'section', 'writing' | sort: 'title' %}
+      {% if articles.size > 0 %}
       <div class="writing-grid">
+        {% for article in articles %}
         <article class="card">
-          <p class="eyebrow">Incident lessons · Azure Key Vault</p>
-          <h3><a href="./posts/key-vault-recovery.html">Recovering a Key Vault and restoring service <span aria-hidden="true">↗</span></a></h3>
-          <p>How to rebuild access after soft-delete recovery and verify that applications can read their secrets again.</p>
+          <p class="eyebrow">{{ article.topic | escape }}</p>
+          <h3><a href="{{ article.url | relative_url }}">{{ article.title | escape }}</a></h3>
+          <p>{{ article.summary | escape }}</p>
         </article>
-        <article class="card">
-          <p class="eyebrow">Incident lessons · Azure networking</p>
-          <h3><a href="./posts/vpn-bgp-health.html">Checking BGP when the VPN tunnel is up <span aria-hidden="true">↗</span></a></h3>
-          <p>How I check peer state, route coverage and redundancy during a VPN routing incident.</p>
-        </article>
+        {% endfor %}
       </div>
+      {% endif %}
       <details class="archive">
         <summary>Earlier posts</summary>
         <ul class="post-list">
