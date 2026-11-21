@@ -1,0 +1,61 @@
+---
+layout: null
+title: Staging Azure Policy enforcement with a CI guard
+summary: How to turn a staged rollout convention into a check that runs before deployment.
+topic: Policy as code
+section: writing
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="How to turn a staged rollout convention into a check that runs before deployment.">
+  <title>Staging Azure Policy enforcement with a CI guard</title>
+  <style>
+    :root { color-scheme: light dark; font-family: system-ui, sans-serif; }
+    * { box-sizing: border-box; }
+    body { margin: 0; line-height: 1.65; }
+    main { max-width: 46rem; margin: 0 auto; padding: clamp(1rem, 5vw, 3rem) 1rem 3rem; }
+    header { margin-block: 2rem; }
+    h1 { font-size: clamp(2rem, 6vw, 3.3rem); letter-spacing: -.04em; line-height: 1.1; }
+    h2 { font-size: clamp(1.25rem, 4vw, 1.65rem); margin-block: 2rem .6rem; line-height: 1.2; }
+    p, h1 { margin-block: .5rem 1rem; }
+    .topic { font-size: .88rem; font-weight: 650; }
+    .lede { font-size: 1.12rem; }
+    li + li { margin-block-start: .55rem; }
+    a { text-underline-offset: .18em; }
+    :focus-visible { outline: .15rem solid currentColor; outline-offset: .2rem; }
+  </style>
+</head>
+<body>
+  <main>
+    <nav aria-label="Main"><a href="../">Home</a></nav>
+    <article>
+      <header>
+        <p class="topic">Policy as code</p>
+        <h1>Staging Azure Policy enforcement with a CI guard</h1>
+        <p class="lede">How to turn a staged rollout convention into a check that runs before deployment.</p>
+      </header>
+
+      <p>When a new Azure Policy assignment can deny a request or change a resource, the rollout deserves its own review. We wanted teams to start new assignments in <code>DoNotEnforce</code>, inspect the results, and then enable enforcement in a deliberate follow-up. I added a CI check so that convention was checked as part of every plan.</p>
+
+      <h2>Validate the effective configuration</h2>
+      <p>Check the policy’s effective behaviour. A plan may omit a parameter when the assignment takes its default, so reading only the assignment parameters can miss the effect entirely. Look at the definition and resolved parameters, including initiatives that group several policies.</p>
+      <p>Separate a new assignment from an intentional transition to enforcement. The first should normally start with enforcement off. A reviewed follow-up can then turn it on. Treat missing information explicitly so reviewers can see which decisions the automation could resolve.</p>
+
+      <h2>Test both sides of the rollout</h2>
+      <ul>
+        <li>A new assignment that starts unenforced passes.</li>
+        <li>A new assignment that starts enforced is flagged before deployment.</li>
+        <li>A follow-up that enables an existing staged assignment follows the enforcement review path.</li>
+      </ul>
+      <p>The guard later stopped a plan that would have recreated enforcing assignments after live state had drifted. That was worth investigating even though the assignment definitions themselves had not changed. We reconciled the live state and reran the plan.</p>
+
+      <h2>Keep the review visible</h2>
+      <p>Run the check in pull requests and again before deployment. Have it explain which assignment was flagged and which effective policy behaviour triggered the check. Reviewers can then inspect the same evidence before deciding how to move forward.</p>
+      <p><a href="https://learn.microsoft.com/en-us/azure/governance/policy/concepts/assignment-structure#enforcement-mode">Azure Policy assignment enforcement modes</a></p>
+    </article>
+  </main>
+</body>
+</html>
