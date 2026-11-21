@@ -1,149 +1,140 @@
+---
+---
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title>Chris Martin - Software Developer</title>
-
-  <link rel="stylesheet" href="https://fonts.xz.style/serve/inter.css" />
-  <link rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@1.1.2/new.min.css" />
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-  <link rel="manifest" href="/site.webmanifest" />
-  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
-  <meta name="msapplication-TileColor" content="#da532c" />
-  <meta name="theme-color" content="#ffffff" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Chris Martin is a Cloud DevOps engineer in Perth working on Azure platform engineering, policy as code and deployment automation.">
+  <title>Chris Martin | Cloud DevOps Engineer</title>
+  <link rel="stylesheet" href="./site.css">
+  <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
+  <link rel="manifest" href="./site.webmanifest">
 </head>
-
 <body>
-  <header>
-    <h1>Chris Martin</h1>
-    <nav>
-      <a href="https://christophermartin.dev">Home</a> /
-      <a href="https://twitter.com/martinchrisl">Twitter</a> /
-      <a href="https://github.com/ChrisLMartin">GitHub</a> /
-      <a href="https://gitlab.com/christopher.martin">GitLab</a> /
-      <a href="https://www.linkedin.com/in/christopherlancemartin/">LinkedIn</a>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header wrap">
+    <a class="wordmark" href="./">Chris Martin</a>
+    <nav aria-label="Main">
+      <a href="#work">Work</a>
+      <a href="#open-source">Open source</a>
+      <a href="#writing">Writing</a>
+      <a href="#about">About</a>
     </nav>
   </header>
-  <main>
-    <h2>G'day!</h2>
-    <p>
-      I'm a sofware engineer with experience in automation, site reliability, and devops roles.
-    </p>
-    <p>
-      I've previously undertaken contracts with various Australian federal government departments,
-      and worked in permanent roles at the medtech startup <a
-        href="https://www.oxehealth.com/">Oxehealth</a> and in both the product and consultancy arms
-      of Oxford Computer Consultants.
-    </p>
-    <p>
-      I spent 2019 until the end of 2022 in Oxford with my wife, <a
-        href="https://www.linkedin.com/in/sarah-martin-40b7b0121/">Sarah</a>, where she completed a
-      D.Phil. investigating offshore wind turbine foundations. We're now in Perth, the Australian
-      hub for offshore engineering.
-    </p>
-    <p>
-      When I'm not in front of the computer, you'll likely find me working to improve my Olympic
-      lifts, or engaged in grappling sports such as judo, Olympic wrestling, or Brazilian Jiu Jitsu.
-    </p>
-    <h3>Posts</h3>
-    <ol class="postlist">
-      <li class="postlist__item">
-        <a href="./posts/MediaPaywalls.html">Media Paywalls</a>
-        <time class="date" datetime="2020-06-17">17 June 2020</time>
-      </li>
-      <li class="postlist__item">
-        <a href="./posts/SqlServerBackupAndRestore.html">SQL Server Backup and Restore</a>
-        <time class="date" datetime="2020-06-16">16 June 2020</time>
-      </li>
-      <li class="postlist__item">
-        <a href="./posts/ComputingGcContent.html">Computing GC Content</a>
-        <time class="date" datetime="2018-03-22">22 March 2018</time>
-      </li>
-    </ol>
-    <h3>Interesting Articles</h3>
-    <ul>
-      <li>
-        <a
-          href="https://danielmiessler.com/blog/no-moving-your-ssh-port-isnt-security-by-obscurity/">
-          No, Moving Your SSH Port Isn’t Security by Obscurity
-        </a>
-      </li>
-      <li>
-        <a href="https://zwischenzugs.com/2022/08/08/who-should-write-the-terraform">
-          Who Should Write the Terraform?
-        </a>
-      </li>
-    </ul>
-    <h3>Reading List</h3>
-    <p>
-      I'm always open to ideas on re-shuffling this list! In progress books in
-      bold.
-    </p>
-    <ul>
-      <li>
-        <s>The Redgate Guide to SQL Server Team-based Development</s>
-        <time class="date" datetime="2019-09">September 2019</time>
-      </li>
-      <li>
-        <s>Working Effectively with Legacy Code</s>
-        <time class="date" datetime="2019-12">December 2019</time>
-      </li>
-      <li>
-        <s>Building Microservices</s>
-        <time class="date" datetime="2020-02">February 2020</time>
-      </li>
-      <li>
-        <s>Domain-Driven Design Distilled</s>
-        <time class="date" datetime="2020-03">March 2020</time>
-      </li>
-      <li>
-        <s>Designing Data-Intensive Applications: The Big Ideas Behind
-          Reliable, Scalable, and Maintainable Systems</s>
-        <time class="date" datetime="2020-05">May 2020</time>
-      </li>
-      <li>
-        <b>How Linux Works</b>
-      </li>
-      <li>
-        <b>Making Servers Work</b>
-      </li>
-      <li>
-        <b>Exploiting Software: How to Break Code</b>
-      </li>
-      <li>Hands On Hacking</li>
-      <li>Site Reliability Engineering</li>
-      <li>Secure By Design</li>
-      <li>Systems Performance</li>
-      <li>Code Complete: A Practical Handbook of Software Construction</li>
-      <li>Clean Code: A Handbook of Agile Software Craftsmanship</li>
-      <li>Design Patterns: Elements of Reusable Object-Oriented Software</li>
-      <li>Patterns of Enterprise Application Architecture</li>
-      <li>
-        Enterprise Integration Patterns: Designing, Building, and Deploying
-        Messaging Solutions
-      </li>
-      <li>
-        Accelerate: The Science of Lean Software and Devops: Building and
-        Scaling High Performing
-      </li>
-      <li>Thinking Security: Stopping Next Year's Hackers</li>
-      <li>
-        REST in Practice: Hypermedia and Systems Architecture - on hold
-        <time class="date" datetime="2021-03">March 2021</time>
-      </li>
-    </ul>
+
+  <main id="main" tabindex="-1" class="wrap">
+    <section class="hero" aria-labelledby="intro-heading">
+      <div class="hero-copy">
+        <p class="eyebrow">Perth, Western Australia</p>
+        <h1 id="intro-heading">Cloud DevOps<br>Engineer</h1>
+        <p>I build and operate Azure platforms with policy as code, tested PowerShell automation and reliable delivery pipelines.</p>
+        <div class="hero-links">
+          <a class="button" href="#work">Explore my work</a>
+          <a href="https://www.linkedin.com/in/christopherlancemartin/">LinkedIn</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="work" class="section" aria-labelledby="work-heading">
+      <h2 id="work-heading">Selected work</h2>
+      <div class="work-grid">
+        <article class="card work-feature">
+          <p class="eyebrow">Pipeline performance</p>
+          <h3>Faster, more reliable Azure deployments</h3>
+          <p>I profiled historical pipeline runs and focused on the jobs that consistently took the longest. That work cut runtimes for access deployments and a governance export, and stopped the export from running out of memory.</p>
+          <p>For privileged group membership, I changed the pipeline to compare desired and live state before writing, so routine runs can skip assignments that already match.</p>
+        </article>
+        <article class="card">
+          <p class="eyebrow">Cloud governance</p>
+          <h3>Azure Policy as code</h3>
+          <p>I used Enterprise Azure Policy as Code (EPAC) to manage security controls through code review and worked with system owners to agree how to remediate existing gaps.</p>
+        </article>
+        <article class="card">
+          <p class="eyebrow">PowerShell and CI</p>
+          <h3>Safer changes to shared tooling</h3>
+          <p>I added tests before consolidating duplicated role-management code, introduced coverage gates for changed code and made pipeline failures easier to diagnose.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="open-source" class="section" aria-labelledby="oss-heading">
+      <h2 id="oss-heading">Open-source contributions</h2>
+      <div class="contributions">
+        <article class="contribution">
+          <p class="eyebrow">Enterprise Azure Policy as Code</p>
+          <div>
+            <h3>Catch invalid policy metadata during planning</h3>
+            <p>Added field-length validation for policy definitions, initiatives and assignments so invalid metadata fails before deployment.</p>
+            <a class="reference" href="https://github.com/Azure/enterprise-azure-policy-as-code/pull/1425">Merged PR #1425</a>
+          </div>
+        </article>
+        <article class="contribution">
+          <p class="eyebrow">Enterprise Azure Policy as Code</p>
+          <div>
+            <h3>Validate overrides for single policies</h3>
+            <p>Fixed an override check that could silently accept invalid policy references.</p>
+            <ul class="reference-list">
+              <li><a class="reference" href="https://github.com/Azure/enterprise-azure-policy-as-code/pull/1418">Merged PR #1418</a></li>
+              <li><a class="reference" href="https://github.com/Azure/enterprise-azure-policy-as-code/pull/1339">App registration permissions docs</a></li>
+              <li><a class="reference" href="https://github.com/Azure/enterprise-azure-policy-as-code/pull/1378">Desired-state docs</a></li>
+            </ul>
+          </div>
+        </article>
+        <article class="contribution">
+          <p class="eyebrow">Azure Resource Manager What-If</p>
+          <div>
+            <h3>Reported a VPN gateway preview discrepancy</h3>
+            <p>Documented a case where ARM what-if and the deployed gateway disagreed about changes to custom BGP peer addresses.</p>
+            <a class="reference" href="https://github.com/Azure/arm-template-whatif/issues/445">Issue #445</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="writing" class="section" aria-labelledby="writing-heading">
+      <h2 id="writing-heading">Writing</h2>
+      {% assign articles = site.pages | where: 'section', 'writing' | sort: 'title' %}
+      {% if articles.size > 0 %}
+      <div class="writing-grid">
+        {% for article in articles %}
+        <article class="card">
+          <p class="eyebrow">{{ article.topic | escape }}</p>
+          <h3><a href="{{ article.url | relative_url }}">{{ article.title | escape }}</a></h3>
+          <p>{{ article.summary | escape }}</p>
+        </article>
+        {% endfor %}
+      </div>
+      {% endif %}
+      <details class="archive">
+        <summary>Earlier posts</summary>
+        <ul class="post-list">
+          <li><a href="./posts/MediaPaywalls.html">Media Paywalls</a><time datetime="2020-06-17">17 June 2020</time></li>
+          <li><a href="./posts/SqlServerBackupAndRestore.html">SQL Server Backup and Restore</a><time datetime="2020-06-16">16 June 2020</time></li>
+          <li><a href="./posts/ComputingGcContent.html">Computing GC Content</a><time datetime="2018-03-22">22 March 2018</time></li>
+        </ul>
+      </details>
+    </section>
+
+    <section id="about" class="section about" aria-labelledby="about-heading">
+      <h2 id="about-heading">About</h2>
+      <div>
+        <p>G'day, I'm Chris. My background is in automation, site reliability and software engineering. Before focusing on Azure, I worked on contracts for Australian federal government departments and in software roles at <a href="https://www.oxehealth.com/">Oxehealth</a> and Oxford Computer Consultants.</p>
+        <p>Outside work, I enjoy strength training and grappling sports.</p>
+      </div>
+    </section>
   </main>
-  <footer>
-    <small>Like the styling? Check out
-      <a href="https://newcss.net/">new.css</a>.</small>
+
+  <footer class="site-footer wrap">
+    <a class="wordmark" href="./">Chris Martin</a>
+    <nav aria-label="Elsewhere">
+      <a href="https://github.com/ChrisLMartin">GitHub</a>
+      <a href="https://www.linkedin.com/in/christopherlancemartin/">LinkedIn</a>
+      <a href="https://gitlab.com/christopher.martin">GitLab</a>
+      <a href="https://twitter.com/martinchrisl">Twitter</a>
+      <a href="./reading.html">Reading list</a>
+    </nav>
   </footer>
 </body>
-
 </html>
