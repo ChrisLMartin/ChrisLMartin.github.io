@@ -1,0 +1,56 @@
+---
+layout: null
+title: Fixing intermittent Bicep lint failures without slowing every build
+summary: A way to measure the cost of a flaky lint step and keep real compilation
+  failures visible.
+topic: CI reliability
+section: writing
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A way to measure the cost of a flaky lint step and keep real compilation failures visible.">
+  <title>Fixing intermittent Bicep lint failures without slowing every build</title>
+  <style>
+    :root { color-scheme: light dark; font-family: system-ui, sans-serif; }
+    * { box-sizing: border-box; }
+    body { margin: 0; line-height: 1.65; }
+    main { max-width: 46rem; margin: 0 auto; padding: clamp(1rem, 5vw, 3rem) 1rem 3rem; }
+    header { margin-block: 2rem; }
+    h1 { font-size: clamp(2rem, 6vw, 3.3rem); letter-spacing: -.04em; line-height: 1.1; }
+    h2 { font-size: clamp(1.25rem, 4vw, 1.65rem); margin-block: 2rem .6rem; line-height: 1.2; }
+    p, h1 { margin-block: .5rem 1rem; }
+    .topic { font-size: .88rem; font-weight: 650; }
+    .lede { font-size: 1.12rem; }
+    li + li { margin-block-start: .55rem; }
+    a { text-underline-offset: .18em; }
+    :focus-visible { outline: .15rem solid currentColor; outline-offset: .2rem; }
+  </style>
+</head>
+<body>
+  <main>
+    <nav aria-label="Main"><a href="../">Home</a></nav>
+    <article>
+      <header>
+        <p class="topic">CI reliability</p>
+        <h1>Fixing intermittent Bicep lint failures without slowing every build</h1>
+        <p class="lede">A way to measure the cost of a flaky lint step and keep real compilation failures visible.</p>
+      </header>
+
+      <p>A shared CI task linted Bicep files in parallel. An occasional run failed with a module restore diagnostic, even when other files using the same artifact built successfully. Serialising every restore was a plausible fix. Before making it permanent, I wanted to know what it would cost.</p>
+
+      <h2>Compare the cost of the fix with the failure</h2>
+      <p>I counted the matching failures in pipeline history, then measured the added time from a serial restore. The serial approach penalised every affected run, including clean ones. Across the observed workload, that extra agent time exceeded the time lost to the failures. The measurements ruled out the workarounds that looked simplest in a single build.</p>
+
+      <h2>Retry the smallest useful unit</h2>
+      <p>The revised approach kept the first pass parallel. After it finished, the task re-linted only files that reported the restore diagnostic associated with the race. A successful retry replaced that file’s earlier result. If the diagnostic persisted, or the file had another compilation error, the run still failed. A known missing artifact was part of the test so the retry could not silently convert a broken build into a pass.</p>
+
+      <h2>Test the failure path as well as the clean path</h2>
+      <p>I checked three cases: a clean pass that performs no extra work, a simulated restore race that the follow-up lint can clear, and a genuinely missing artifact that still fails. A live CI run confirmed the revised task worked with the normal pipeline. Those cases are also a useful regression test when the linter or module restore behaviour changes.</p>
+      <p>For any flaky CI step, start with the frequency and cost of the failure. Then test the smallest recovery you can express without losing the compiler’s signal.</p>
+    </article>
+  </main>
+</body>
+</html>
