@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="What to verify after recovering a soft-deleted Azure Key Vault, from restoring role assignments to checking real workload access.">
+  <title>Recovering a Key Vault and restoring service | Chris Martin</title>
+  <link rel="stylesheet" href="../site.css">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header wrap">
+    <a class="wordmark" href="../">Chris Martin</a>
+    <nav aria-label="Main">
+      <a href="../#work">Work</a>
+      <a href="../#open-source">Open source</a>
+      <a href="../#writing">Writing</a>
+      <a href="../#about">About</a>
+    </nav>
+  </header>
+
+  <main id="main" tabindex="-1" class="article wrap">
+    <a class="back-link" href="../#writing">← All writing</a>
+    <article>
+      <header>
+        <p class="eyebrow">Incident lessons · Azure Key Vault</p>
+        <h1>Recovering a Key Vault and restoring service</h1>
+        <p class="lede">A vault can reappear in Azure before applications can read from it. I helped with a recovery where restoring access was a separate step.</p>
+      </header>
+
+      <h2>Rebuild the access the workload needs</h2>
+      <p>Azure Key Vault soft-delete can recover a vault and its contents within the retention window. Azure role assignments scoped to the vault and integrations such as Event Grid subscriptions may have to be recreated.</p>
+      <p>In this recovery, we used Azure Activity Log history to help identify deleted role assignments. I prepared a script that previewed the proposed changes, applied only the agreed vault-scoped assignments and skipped assignments already present. That made the plan reviewable and gave us a safe way to rerun it.</p>
+
+      <h2>Verify access as the application</h2>
+      <p>A successful read by an administrator tells you little about the application's identity or network path. Exercise a representative operation using the workload identity from its usual network, then look for a successful call from that identity in Key Vault diagnostic logs. Verify any event subscriptions or other integrations the workload depends on separately.</p>
+      <p>If a networking dependency appears to be missing, compare with a known-good configuration or earlier telemetry before rebuilding it. That distinction helps avoid adding a dependency the workload never used.</p>
+
+      <h2>Make the recovery repeatable</h2>
+      <p>Keep the expected permissions and integrations under version control where possible. Document the verification steps alongside the restore steps so the next person can confirm recovery from the workload's perspective.</p>
+      <p><a href="https://learn.microsoft.com/en-us/azure/key-vault/general/soft-delete-overview">Azure Key Vault soft-delete documentation</a></p>
+    </article>
+  </main>
+
+  <footer class="site-footer wrap">
+    <a class="wordmark" href="../">Chris Martin</a>
+    <nav aria-label="Elsewhere">
+      <a href="https://github.com/ChrisLMartin">GitHub</a>
+      <a href="https://www.linkedin.com/in/christopherlancemartin/">LinkedIn</a>
+    </nav>
+  </footer>
+</body>
+</html>

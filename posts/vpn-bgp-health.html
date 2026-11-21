@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="How to check BGP peer state, route coverage and redundancy during an Azure VPN routing incident.">
+  <title>Checking BGP when the VPN tunnel is up | Chris Martin</title>
+  <link rel="stylesheet" href="../site.css">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header wrap">
+    <a class="wordmark" href="../">Chris Martin</a>
+    <nav aria-label="Main">
+      <a href="../#work">Work</a>
+      <a href="../#open-source">Open source</a>
+      <a href="../#writing">Writing</a>
+      <a href="../#about">About</a>
+    </nav>
+  </header>
+
+  <main id="main" tabindex="-1" class="article wrap">
+    <a class="back-link" href="../#writing">← All writing</a>
+    <article>
+      <header>
+        <p class="eyebrow">Incident lessons · Azure networking</p>
+        <h1>Checking BGP when the VPN tunnel is up</h1>
+        <p class="lede">In a routing incident I helped investigate, the IPsec tunnels stayed connected while some Border Gateway Protocol (BGP) sessions failed to re-establish. Tunnel status alone missed the failure.</p>
+      </header>
+
+      <h2>Check the tunnel, peer and routes</h2>
+      <p>Check the BGP state for each expected peer, then compare learned and advertised routes with what you expect on both sides. An established BGP session can still be missing the prefix the application needs.</p>
+      <p>Save a known-good snapshot for comparison. I find it useful to answer two questions separately.</p>
+      <ul>
+        <li><strong>Are the expected prefixes still present?</strong> Compare the set of learned prefixes with the baseline. If an expected prefix is missing, check whether traffic to that destination still has a usable route.</li>
+        <li><strong>Did we lose a path?</strong> Compare prefixes together with their next hops. Losing one next hop while the prefix remains can indicate reduced redundancy, even if traffic still flows.</li>
+      </ul>
+
+      <h2>Verify recovery from both sides</h2>
+      <p>Check that the expected peers and routes return, then test traffic from a representative source to its destination and check the return path. That gives you evidence of both routing recovery and usable connectivity.</p>
+      <p>For monitoring, use tunnel status alongside per-peer BGP metrics and checks for critical prefixes. Keep the distinction in the incident review so a future responder knows whether an alert points to lost connectivity or a degraded failover path.</p>
+      <p><a href="https://learn.microsoft.com/en-us/azure/vpn-gateway/monitor-vpn-gateway">Azure VPN Gateway monitoring documentation</a></p>
+    </article>
+  </main>
+
+  <footer class="site-footer wrap">
+    <a class="wordmark" href="../">Chris Martin</a>
+    <nav aria-label="Elsewhere">
+      <a href="https://github.com/ChrisLMartin">GitHub</a>
+      <a href="https://www.linkedin.com/in/christopherlancemartin/">LinkedIn</a>
+    </nav>
+  </footer>
+</body>
+</html>
