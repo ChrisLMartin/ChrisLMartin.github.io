@@ -1,0 +1,60 @@
+---
+layout: null
+title: Staging an ARM-to-Bicep migration
+summary: How to prove deployment parity with a parallel path and a sandbox before
+  switching live environments.
+topic: Infrastructure as code
+section: writing
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="How to prove deployment parity with a parallel path and a sandbox before switching live environments.">
+  <title>Staging an ARM-to-Bicep migration</title>
+  <style>
+    :root { color-scheme: light dark; font-family: system-ui, sans-serif; }
+    * { box-sizing: border-box; }
+    body { margin: 0; line-height: 1.65; }
+    main { max-width: 46rem; margin: 0 auto; padding: clamp(1rem, 5vw, 3rem) 1rem 3rem; }
+    header { margin-block: 2rem; }
+    h1 { font-size: clamp(2rem, 6vw, 3.3rem); letter-spacing: -.04em; line-height: 1.1; }
+    h2 { font-size: clamp(1.25rem, 4vw, 1.65rem); margin-block: 2rem .6rem; line-height: 1.2; }
+    p, h1 { margin-block: .5rem 1rem; }
+    .topic { font-size: .88rem; font-weight: 650; }
+    .lede { font-size: 1.12rem; }
+    li + li { margin-block-start: .55rem; }
+    a { text-underline-offset: .18em; }
+    :focus-visible { outline: .15rem solid currentColor; outline-offset: .2rem; }
+  </style>
+</head>
+<body>
+  <main>
+    <nav aria-label="Main"><a href="../">Home</a></nav>
+    <article>
+      <header>
+        <p class="topic">Infrastructure as code</p>
+        <h1>Staging an ARM-to-Bicep migration</h1>
+        <p class="lede">How to prove deployment parity with a parallel path and a sandbox before switching live environments.</p>
+      </header>
+
+      <p>A migration from ARM JSON to Bicep can change the authoring language, module boundaries and release process all at once. In a migration I helped design and validate, we kept the existing deployment path available while building a second path, then treated the engine switch as its own change.</p>
+
+      <h2>Hold the deployment inputs steady</h2>
+      <p>Start from the parameters the existing pipelines actually use. Generate equivalent Bicep parameters and check the generated files in CI so they cannot quietly drift from their source. Keep existing modules where you can, then convert them in small groups with their own comparison against the current output. This makes it easier to tell whether a difference came from the new authoring language or from an intentional platform change.</p>
+
+      <h2>Prove the candidate in layers</h2>
+      <ol>
+        <li><strong>Compare inputs and compiled resources.</strong> Examine meaningful property differences. Establish a baseline before interpreting changes in what-if output.</li>
+        <li><strong>Deploy both paths in the same sandbox.</strong> Start with the existing engine, redeploy with Bicep, and verify the resulting resources and permissions. A preview alone cannot establish runtime parity.</li>
+        <li><strong>Run read-only previews across representative environments.</strong> Inspect changes by resource and property. Investigate unexpected creates or deletes, and distinguish recurring preview noise from changes the deployment would actually make.</li>
+      </ol>
+
+      <h2>Make cutover an explicit decision</h2>
+      <p>Keep the existing engine as the default while the replacement is being reviewed. Switch in small groups when the preview evidence and approval checks are ready. Give deliberate infrastructure changes their own review so they are visible independently of the migration. Plan how to pause or revert before promoting the next group.</p>
+      <p>We exercised the parallel path in a sandbox and ran broad what-if comparisons ahead of cutover. The sample that mattered most was an actual redeploy in a controlled environment, because it tested the effects that previews could only predict.</p>
+    </article>
+  </main>
+</body>
+</html>
