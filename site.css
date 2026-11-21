@@ -1,13 +1,24 @@
 :root {
-  color-scheme: light;
-  --paper: #f5f5ef;
-  --surface: #fff;
-  --ink: #192338;
-  --muted: #49566b;
-  --blue: #2549a2;
-  --navy: #142346;
-  --line: #cfd5de;
-  --mono: ui-monospace, "Cascadia Code", Consolas, monospace;
+  color-scheme: light dark;
+  --paper: #fff;
+  --surface: #f6f8fa;
+  --ink: #1a1a1a;
+  --muted: #505050;
+  --link: #0366d6;
+  --link-hover: #004a9f;
+  --line: #e5e7eb;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #000;
+    --surface: #111;
+    --ink: #eee;
+    --muted: #b8b8b8;
+    --link: #3291ff;
+    --link-hover: #71b5ff;
+    --line: #333;
+  }
 }
 
 *, *::before, *::after {
@@ -32,13 +43,11 @@ h1, h2, h3 {
 }
 
 h2 {
-  font-size: clamp(1.85rem, 4.4vw, 3rem);
-  letter-spacing: -.045em;
+  font-size: clamp(1.65rem, 3vw, 2rem);
 }
 
 h3 {
   font-size: clamp(1.2rem, 3vw, 1.5rem);
-  letter-spacing: -.025em;
 }
 
 p + p {
@@ -46,11 +55,12 @@ p + p {
 }
 
 a {
-  color: var(--blue);
+  color: var(--link);
   text-underline-offset: .2em;
 }
 
 a:hover {
+  color: var(--link-hover);
   text-decoration-thickness: .13em;
 }
 
@@ -97,7 +107,7 @@ a:hover {
 }
 
 .site-header a:hover, .site-footer a:hover {
-  color: var(--blue);
+  color: var(--link-hover);
   text-decoration: underline;
 }
 
@@ -107,51 +117,27 @@ a:hover {
 }
 
 .hero {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  display: grid;
-  align-items: center;
-  min-height: clamp(25rem, 62vw, 31rem);
-  padding: clamp(1.5rem, 6vw, 4.5rem);
-  border-radius: 1rem;
-  background: var(--navy);
-  color: var(--surface);
-}
-
-.hero::before {
-  position: absolute;
-  z-index: -1;
-  inset: 0;
-  background:
-    repeating-radial-gradient(circle at 88% 65%, transparent 0 2.15rem, #8da7ed24 2.18rem 2.23rem),
-    radial-gradient(ellipse at 100% 90%, #2e57bb 0%, transparent 66%);
-  mask-image: linear-gradient(90deg, transparent 28%, #000 91%);
-  content: "";
+  padding: clamp(1.5rem, 5vw, 3rem);
+  border: 1px solid var(--line);
+  border-radius: .375rem;
+  background: var(--surface);
 }
 
 .eyebrow {
-  color: var(--blue);
-  font: 650 .78rem/1.5 var(--mono);
-  letter-spacing: .06em;
-  text-transform: uppercase;
-}
-
-.hero .eyebrow {
-  color: #c9d8ff;
+  color: var(--muted);
+  font-size: .875rem;
+  font-weight: 600;
 }
 
 .hero h1 {
-  margin-block: .85rem 1.25rem;
-  font-size: clamp(2.6rem, 8vw, 6.1rem);
-  letter-spacing: -.075em;
-  line-height: .98;
+  margin-block: .65rem 1rem;
+  font-size: clamp(2.25rem, 6vw, 3.5rem);
+  letter-spacing: -.035em;
 }
 
 .hero-copy > p:not(.eyebrow) {
   max-width: 30rem;
-  color: #e0e8ff;
-  font-size: clamp(1.02rem, 2.1vw, 1.24rem);
+  font-size: 1.05rem;
 }
 
 .hero-links {
@@ -164,28 +150,15 @@ a:hover {
 
 .button {
   display: inline-block;
-  padding: .6rem .9rem;
-  border-radius: .35rem;
-  background: #dce7ff;
-  color: var(--navy);
-  font-weight: 700;
-  text-decoration: none;
-}
-
-.button:hover {
-  background: var(--surface);
-}
-
-.hero :focus-visible {
-  outline-color: var(--surface);
-}
-
-.quiet-link {
-  color: var(--surface);
+  padding: .5rem .75rem;
+  border: 1px solid var(--line);
+  border-radius: .25rem;
+  background: var(--paper);
+  font-weight: 650;
 }
 
 .section {
-  margin-block-start: clamp(2.8rem, 7vw, 5.4rem);
+  margin-block-start: clamp(2.5rem, 6vw, 4rem);
   scroll-margin-block-start: 1rem;
 }
 
@@ -209,8 +182,7 @@ a:hover {
 .card {
   padding: clamp(1.15rem, 3.6vw, 2rem);
   border: 1px solid var(--line);
-  border-radius: .75rem;
-  background: var(--surface);
+  border-radius: .375rem;
 }
 
 .card h3 {
@@ -223,12 +195,11 @@ a:hover {
 
 .work-feature {
   grid-row: span 2;
-  background: #e5ecfc;
 }
 
 .work-feature h3 {
   max-width: 23rem;
-  font-size: clamp(1.55rem, 3.4vw, 2.35rem);
+  font-size: clamp(1.4rem, 3vw, 1.8rem);
 }
 
 .contribution {
@@ -259,21 +230,6 @@ a:hover {
   padding: 0;
   margin: 0;
   list-style: none;
-}
-
-.writing-grid h3 a {
-  color: var(--ink);
-  text-decoration: none;
-}
-
-.writing-grid h3 a:hover {
-  color: var(--blue);
-  text-decoration: underline;
-}
-
-.writing-grid h3 span {
-  color: var(--blue);
-  font-size: .8em;
 }
 
 .archive {
@@ -325,14 +281,12 @@ a:hover {
 
 .article h1 {
   margin-block: .7rem 1rem;
-  font-size: clamp(2.3rem, 6.5vw, 4.2rem);
-  letter-spacing: -.06em;
+  font-size: clamp(2rem, 5vw, 2.75rem);
 }
 
 .article h2 {
   margin-block: 2rem .6rem;
   font-size: clamp(1.4rem, 4vw, 1.9rem);
-  letter-spacing: -.03em;
 }
 
 .article li + li {
@@ -360,10 +314,6 @@ a:hover {
 }
 
 @media (max-width: 28rem) {
-  .hero::before {
-    mask-image: linear-gradient(90deg, transparent 43%, #0008 100%);
-  }
-
   .site-header {
     align-items: flex-start;
     flex-direction: column;
